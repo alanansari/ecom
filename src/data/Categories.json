@@ -1,0 +1,132 @@
+[
+    {
+        "id": 1,
+        "name": "Toys & Gadgets",
+        "subCategories": [
+            {
+                "id": 1,
+                "name": "RC vehicles"
+            },
+            {
+                "id": 2,
+                "name": "Drones"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Vehicles",
+        "subCategories": [
+            {
+                "id": 1,
+                "name": "ATV (electric)"
+            },
+            {
+                "id": 2,
+                "name": "Electric scooter"
+            },
+            {
+                "id": 3,
+                "name": "Electric bike"
+            },
+            {
+                "id": 4,
+                "name": "GoKart"
+            },
+            {
+                "id": 5,
+                "name": "Golf car"
+            
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Electronics",
+        "subCategories": [
+            {
+                "id": 1,
+                "name": "Digital binoculars"
+            },
+            {
+                "id": 2,
+                "name": "DVD player"
+            },
+            {
+                "id": 3,
+                "name": "HP meter"
+            },
+            {
+                "id": 4,
+                "name": "TV clock & wristwatch"
+            },
+            {
+                "id": 5,
+                "name": "Walkie talkie"
+            
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Home & Automation",
+        "subCategories": [
+            {
+                "id": 1,
+                "name": "Robot vacuum cleaner"
+            },
+            {
+                "id": 2,
+                "name": "Solar cells"
+            },
+            {
+                "id": 3,
+                "name": "Snow blower"
+            },
+            {
+                "id": 4,
+                "name": "Lawn mower"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Sports & Recreation",
+        "subCategories": [
+            {
+                "id": 1,
+                "name": "Billiard table (with drill)"
+            },
+            {
+                "id": 2,
+                "name": "Train track (for PC)"
+            },
+            {
+                "id": 3,
+                "name": "Bicycle (electric, 1, 2)"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Lighting & Optics",
+        "subCategories": [
+            {
+                "id": 1,
+                "name": "LED lamp"
+            },
+            {
+                "id": 2,
+                "name": "Disco lights"
+            },
+            {
+                "id": 3,
+                "name": "Binoculars"
+            },
+            {
+                "id": 4,
+                "name": "Starry sky"
+            }
+        ]
+    }
+]

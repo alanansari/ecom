@@ -1,0 +1,116 @@
+[
+    {
+        "id": 1,
+        "name": "Electric Scooter",
+        "description": "5000 watts",
+        "image": "https://res.cloudinary.com/dov6iolx4/image/upload/v1736852649/escooty_ymydnl.jpg",
+        "price": 14000,
+        "tags": ["popular", "new"],
+        "category": "Vehicles",
+        "rating": 4.5,
+        "reviews": [
+            {
+                "id": 1,
+                "rating": 4.5,
+                "comment": "Great scooter, but the battery could be better",
+                "author": "John Doe"
+            },
+            {
+                "id": 2,
+                "rating": 4.5,
+                "comment": "Great scooter, but the battery could be better",
+                "author": "John Doe"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "4WD, 3-seters, Willy el-Jeep",
+        "description":"med Gummidekk, Fjernkontroll og Skinnseter.",
+        "image": "https://res.cloudinary.com/dov6iolx4/image/upload/v1736852649/wagon_cmgreh.jpg",
+        "price": 5998,
+        "tags": ["new"],
+        "category": "Vehicles",
+        "rating": 4.5,
+        "reviews": [
+            {
+                "id": 1,
+                "rating": 4.5,
+                "comment": "Great scooter, but the battery could be better",
+                "author": "John Doe"
+            },
+            {
+                "id": 2,
+                "rating": 4.5,
+                "comment": "Great scooter, but the battery could be better",
+                "author": "John Doe"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Electric fatbike",
+        "description": "lithtium battery, 500w motor",
+        "image": "https://res.cloudinary.com/dov6iolx4/image/upload/v1736852648/cycle_lsh8zz.jpg",
+        "price": 7998,
+        "tags": ["popular", "new"],
+        "category": "Vehicles",
+        "rating": 4.5,
+        "reviews": [
+            {
+                "id": 1,
+                "rating": 4.5,
+                "comment": "Great scooter, but the battery could be better",
+                "author": "John Doe"
+            },
+            {
+                "id": 2,
+                "rating": 4.5,
+                "comment": "Great scooter, but the battery could be better",
+                "author": "John Doe"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "RC Tank",
+        "description": "metal 55cm with air cannon",
+        "image": "https://res.cloudinary.com/dov6iolx4/image/upload/v1736852648/tank_a21c8x.jpg",
+        "price": 2998,
+        "tags": ["popular"],
+        "category": "Toys & Gadgets",
+        "rating": 4.5,
+        "reviews": [
+            {
+                "id": 1,
+                "rating": 4.5,
+                "comment": "Great scooter, but the battery could be better",
+                "author": "John Doe"
+            },
+            {
+                "id": 2,
+                "rating": 4.5,
+                "comment": "Great scooter, but the battery could be better",
+                "author": "John Doe"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "R2 D2 Star Wars Robot",
+        "description": "Reacts to more than 40 commands",
+        "image": "https://res.cloudinary.com/dov6iolx4/image/upload/v1737220340/robot_z3qovp.jpg",
+        "price": 2998,
+        "tags": ["popular"],
+        "category": "Toys & Gadgets"
+    },
+    {
+        "id": 6,
+        "name": "Remote-controlled Robot-Arm construction kit",
+        "description": "Reacts to more than 40 commands",
+        "image": "https://res.cloudinary.com/dov6iolx4/image/upload/v1737222832/robo-arm_qjxuyk.jpg",
+        "price": 5698,
+        "tags": ["popular"],
+        "category": "Electronics"
+    }
+]
