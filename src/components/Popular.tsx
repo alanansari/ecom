@@ -9,9 +9,7 @@ import { fadeIn } from "../utils/variants";
 import { CartContext } from "../context/cart";
 
 const PopularProducts = () => {
-
-  const { setCart } = useContext(CartContext);
-
+  const { setCart, cart } = useContext(CartContext);
   const navigate = useNavigate();
 
   const handleClick = (id: number) => {
@@ -19,9 +17,9 @@ const PopularProducts = () => {
   };
 
   const addToCart = (product: any) => {
-    setCart((prevCart:any) => {
+    setCart((prevCart: any) => {
       const existingProduct = prevCart.items[product.id];
-  
+
       if (existingProduct) {
         return {
           ...prevCart,
@@ -35,7 +33,7 @@ const PopularProducts = () => {
           totalItems: prevCart.totalItems + 1,
         };
       }
-  
+
       return {
         ...prevCart,
         items: {
@@ -50,6 +48,35 @@ const PopularProducts = () => {
         },
         totalItems: prevCart.totalItems + 1,
       };
+    });
+  };
+
+  const removeFromCart = (product: any) => {
+    setCart((prevCart: any) => {
+      const existingProduct = prevCart.items[product.id];
+
+      if (existingProduct && existingProduct.quantity > 1) {
+        return {
+          ...prevCart,
+          items: {
+            ...prevCart.items,
+            [product.id]: {
+              ...existingProduct,
+              quantity: existingProduct.quantity - 1,
+            },
+          },
+          totalItems: prevCart.totalItems - 1,
+        };
+      } else {
+        const newItems = { ...prevCart.items };
+        delete newItems[product.id];
+
+        return {
+          ...prevCart,
+          items: newItems,
+          totalItems: prevCart.totalItems - 1,
+        };
+      }
     });
   };
 
@@ -87,6 +114,7 @@ const PopularProducts = () => {
       },
     ],
   };
+
   return (
     <div className="flex flex-col justify-center p-8 bg-gradient-to-r from-amber-400 to-emerald-400">
       <motion.div
@@ -94,41 +122,72 @@ const PopularProducts = () => {
         initial="hidden"
         whileInView={"show"}
       >
-        <div className="text-white text-4xl font-semibold">
-          Popular Products
-        </div>
+        <div className="text-white text-4xl font-semibold">Popular Products</div>
         <div className="p-4">
           <Slider {...settings}>
-            {products.filter((p)=>p.tags.includes('popular')).map((product) => (
-              <div
-                className="flex flex-col p-4 bg-white rounded-2xl shadow-md cursor-pointer"
-                key={product.id}
-                onClick={() => handleClick(product.id)}
-              >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="h-48 w-full object-cover"
-                />
-                <div className="text-lg font-semibold mt-2">{product.name}</div>
-                <div className="text-sm text-gray-500">
-                  {product.description}
-                </div>
-                <div className="grid grid-cols-2 gap-2 mt-2">
-                  <div className="text-lg font-bold mt-2 flex justify-center items-center">
-                    NOK {product.price}
-                  </div>
-                  <button className="border transition-all border-black text-sm font-semibold hover:bg-black hover:text-white p-2 px-4 rounded-full mt-4 w-fit"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToCart(product);
-                    }}
+            {products
+              .filter((p) => p.tags.includes("popular"))
+              .map((product) => {
+                const productInCart = cart.items[product.id];
+                return (
+                  <div
+                    className="flex flex-col p-4 bg-white rounded-2xl shadow-md cursor-pointer"
+                    key={product.id}
+                    onClick={() => handleClick(product.id)}
                   >
-                    Add to cart
-                  </button>
-                </div>
-              </div>
-            ))}
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="h-48 w-full object-cover"
+                    />
+                    <div className="text-lg font-semibold mt-2">{product.name}</div>
+                    <div className="text-sm text-gray-500">{product.description}</div>
+                    <div className="grid grid-cols-2 gap-2 mt-2">
+                      <div className="text-lg font-bold mt-2 flex justify-center items-center">
+                        NOK {product.price}
+                      </div>
+
+                      <div className="flex justify-center items-center gap-2">
+                        {productInCart ? (
+                          <>
+                            <button
+                              className="border transition-all border-black text-sm font-semibold hover:bg-black hover:text-white p-2 px-4 rounded-full"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeFromCart(product);
+                              }}
+                            >
+                              -
+                            </button>
+                            <span className="text-lg font-semibold">
+                              {productInCart.quantity}
+                            </span>
+                            <button
+                              className="border transition-all border-black text-sm font-semibold hover:bg-black hover:text-white p-2 px-4 rounded-full"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                addToCart(product);
+                              }}
+                            >
+                              +
+                            </button>
+                          </>
+                        ) : (
+                          <button
+                            className="border transition-all border-black text-sm font-semibold hover:bg-black hover:text-white p-2 px-4 rounded-full"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              addToCart(product);
+                            }}
+                          >
+                            Add to cart
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
           </Slider>
         </div>
       </motion.div>

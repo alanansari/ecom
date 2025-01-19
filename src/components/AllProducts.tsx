@@ -8,7 +8,7 @@ import { CartContext } from "../context/cart";
 
 const AllProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const { setCart } = useContext(CartContext);
+  const { setCart, cart } = useContext(CartContext);
 
   const navigate = useNavigate();
 
@@ -17,9 +17,9 @@ const AllProducts = () => {
   };
 
   const addToCart = (product: any) => {
-    setCart((prevCart:any) => {
+    setCart((prevCart: any) => {
       const existingProduct = prevCart.items[product.id];
-  
+
       if (existingProduct) {
         return {
           ...prevCart,
@@ -33,7 +33,7 @@ const AllProducts = () => {
           totalItems: prevCart.totalItems + 1,
         };
       }
-  
+
       return {
         ...prevCart,
         items: {
@@ -50,7 +50,35 @@ const AllProducts = () => {
       };
     });
   };
-  
+
+  const removeFromCart = (product: any) => {
+    setCart((prevCart: any) => {
+      const existingProduct = prevCart.items[product.id];
+
+      if (existingProduct && existingProduct.quantity > 1) {
+        return {
+          ...prevCart,
+          items: {
+            ...prevCart.items,
+            [product.id]: {
+              ...existingProduct,
+              quantity: existingProduct.quantity - 1,
+            },
+          },
+          totalItems: prevCart.totalItems - 1,
+        };
+      } else {
+        const newItems = { ...prevCart.items };
+        delete newItems[product.id];
+
+        return {
+          ...prevCart,
+          items: newItems,
+          totalItems: prevCart.totalItems - 1,
+        };
+      }
+    });
+  };
 
   return (
     <div className="py-4">
@@ -81,38 +109,71 @@ const AllProducts = () => {
           .filter(
             (p) => p.category === selectedCategory || selectedCategory === "All"
           )
-          .map((product, index) => (
-            <motion.div
-              variants={fadeIn("up", 0.05 * index)}
-              initial="hidden"
-              whileInView={"show"}
-              className="flex flex-col p-4 bg-white border shadow-md cursor-pointer"
-              key={product.id}
-              onClick={() => handleClick(product.id)}
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="h-48 w-full object-cover"
-              />
-              <div className="text-lg font-semibold mt-2">{product.name}</div>
-              <div className="text-sm text-gray-500">{product.description}</div>
-              <div className="grid grid-cols-2 gap-2 mt-2">
-                <div className="text-lg font-bold mt-2 flex justify-center items-center">
-                  NOK {product.price}
+          .map((product, index) => {
+            const productInCart = cart.items[product.id];
+
+            return (
+              <motion.div
+                variants={fadeIn("up", 0.05 * index)}
+                initial="hidden"
+                whileInView={"show"}
+                className="flex flex-col p-4 bg-white border shadow-md cursor-pointer"
+                key={product.id}
+                onClick={() => handleClick(product.id)}
+              >
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="h-48 w-full object-cover"
+                />
+                <div className="text-lg font-semibold mt-2">{product.name}</div>
+                <div className="text-sm text-gray-500">{product.description}</div>
+                <div className="grid grid-cols-2 gap-2 mt-2">
+                  <div className="text-lg font-bold mt-2 flex justify-center items-center">
+                    NOK {product.price}
+                  </div>
+
+                  <div className="flex justify-center items-center gap-2">
+                    {productInCart ? (
+                      <>
+                        <button
+                          className="border transition-all border-black text-sm font-semibold hover:bg-black hover:text-white p-2 px-4 rounded-full"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeFromCart(product);
+                          }}
+                        >
+                          -
+                        </button>
+                        <span className="text-lg font-semibold ">
+                          {productInCart.quantity}
+                        </span>
+                        <button
+                          className="border transition-all border-black text-sm font-semibold hover:bg-black hover:text-white p-2 px-4 rounded-full"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            addToCart(product);
+                          }}
+                        >
+                          +
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        className="border transition-all border-black text-sm font-semibold hover:bg-black hover:text-white p-2 px-4 rounded-full"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToCart(product);
+                        }}
+                      >
+                        Add to cart
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <button
-                  className="border transition-all border-black text-sm font-semibold hover:bg-black hover:text-white p-2 px-4 rounded-full mt-4 w-fit"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    addToCart(product);
-                  }}
-                >
-                  Add to cart
-                </button>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
       </div>
     </div>
   );

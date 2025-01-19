@@ -7,13 +7,15 @@ import products from "../data/Products.json";
 
 const Product = () => {
   const { productId } = useParams();
-  const { setCart } = useContext(CartContext);
+  const { setCart, cart } = useContext(CartContext);
 
   const product = products.find((p) => p.id === parseInt(productId!));
 
   if (!product) {
     return <h1 className="text-center text-2xl">Product not found</h1>;
   }
+
+  const productInCart = cart.items[product.id];
 
   const addToCart = () => {
     setCart((prevCart: any) => {
@@ -48,6 +50,34 @@ const Product = () => {
     });
   };
 
+  const removeFromCart = () => {
+    setCart((prevCart: any) => {
+      const existingProduct = prevCart.items[product.id];
+      if (existingProduct && existingProduct.quantity > 1) {
+        return {
+          ...prevCart,
+          items: {
+            ...prevCart.items,
+            [product.id]: {
+              ...existingProduct,
+              quantity: existingProduct.quantity - 1,
+            },
+          },
+          totalItems: prevCart.totalItems - 1,
+        };
+      } else {
+        const newItems = { ...prevCart.items };
+        delete newItems[product.id];
+
+        return {
+          ...prevCart,
+          items: newItems,
+          totalItems: prevCart.totalItems - 1,
+        };
+      }
+    });
+  };
+
   return (
     <div className="p-0 m-0 w-[100vw] box-border">
       <Navbar />
@@ -68,12 +98,35 @@ const Product = () => {
             <span className="text-yellow-500">★ {product.rating}</span>
             <span className="text-sm text-gray-500">(Based on reviews)</span>
           </div>
-          <button
-            className="bg-blue-600 text-white px-4 py-2 rounded-md"
-            onClick={addToCart}
-          >
-            Add to Cart
-          </button>
+
+          {/* Quantity and Add to Cart Logic */}
+          <div className="flex items-center gap-4 mt-4">
+            {productInCart ? (
+              <>
+                <button
+                  className="border transition-all border-black text-sm font-semibold hover:bg-black hover:text-white p-2 px-4 rounded-full"
+                  onClick={removeFromCart}
+                >
+                  -
+                </button>
+                <span className="text-lg font-semibold">{productInCart.quantity}</span>
+                <button
+                  className="border transition-all border-black text-sm font-semibold hover:bg-black hover:text-white p-2 px-4 rounded-full"
+                  onClick={addToCart}
+                >
+                  +
+                </button>
+              </>
+            ) : (
+              <button
+                className="border transition-all border-black text-sm font-semibold hover:bg-black hover:text-white p-2 px-4 rounded-full"
+                onClick={addToCart}
+              >
+                Add to Cart
+              </button>
+            )}
+          </div>
+
           <div className="mt-8">
             <h2 className="text-2xl font-semibold">Comments</h2>
             {product.reviews && product.reviews.length > 0 ? (
