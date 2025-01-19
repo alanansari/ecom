@@ -48,6 +48,17 @@ const Cart = () => {
     });
   };
 
+  const deleteItem = (productId: number) => {
+    setCart((prevCart: any) => {
+      const { [productId]: removed, ...remainingItems } = prevCart.items; // Remove item completely
+      return {
+        ...prevCart,
+        items: remainingItems,
+        totalItems: prevCart.totalItems - 1,
+      };
+    });
+  };
+
   const totalCost = Object.values(cart.items).reduce(
     (sum: number, item: any) => sum + item.price * item.quantity,
     0
@@ -91,6 +102,12 @@ const Cart = () => {
                       onClick={() => incrementQuantity(item.id)}
                     >
                       +
+                    </button>
+                    <button
+                      className="px-3 py-1 bg-red-500 text-white rounded"
+                      onClick={() => deleteItem(item.id)}
+                    >
+                      Delete
                     </button>
                   </div>
                 </div>
