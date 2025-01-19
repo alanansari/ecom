@@ -27,7 +27,7 @@ const Cart = () => {
     setCart((prevCart: any) => {
       const product = prevCart.items[productId];
       if (product.quantity === 1) {
-        const { [productId]: removed, ...remainingItems } = prevCart.items; // Remove item from cart
+        const { [productId]: removed, ...remainingItems } = prevCart.items;
         return {
           ...prevCart,
           items: remainingItems,
@@ -50,11 +50,12 @@ const Cart = () => {
 
   const deleteItem = (productId: number) => {
     setCart((prevCart: any) => {
+      const product = prevCart.items[productId];
       const { [productId]: removed, ...remainingItems } = prevCart.items; // Remove item completely
       return {
         ...prevCart,
         items: remainingItems,
-        totalItems: prevCart.totalItems - 1,
+        totalItems: prevCart.totalItems - product.quantity, // Decrement totalItems by the quantity of the removed product
       };
     });
   };
